@@ -1,7 +1,14 @@
 const router = require('express').Router()
+//importing accounts-model to access functions
+const Accounts = require("./accounts-model")
 
-router.get('/', (req, res, next) => {
-  // DO YOUR MAGIC
+router.get('/', async(req, res, next) => {
+  try{
+    const data = await Accounts.getAll()
+    res.json(data)
+  } catch(err){
+    next(err)
+  }
 })
 
 router.get('/:id', (req, res, next) => {
@@ -21,7 +28,9 @@ router.delete('/:id', (req, res, next) => {
 })
 
 router.use((err, req, res, next) => { // eslint-disable-line
-  // DO YOUR MAGIC
+  res.status(err.status || 500).json({
+    message: err.message,
+  })
 })
 
 module.exports = router;
