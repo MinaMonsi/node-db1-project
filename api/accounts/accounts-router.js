@@ -11,8 +11,13 @@ router.get('/', async(req, res, next) => {
   }
 })
 
-router.get('/:id', (req, res, next) => {
-  // DO YOUR MAGIC
+router.get('/:id', async(req, res, next) => {
+  try{
+    const data = await Accounts.getById(req.params.id)
+    res.json(data)
+  }catch (err){
+    next(err)
+  }
 })
 
 router.post('/', (req, res, next) => {
