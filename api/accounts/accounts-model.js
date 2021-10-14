@@ -1,4 +1,4 @@
-//importing DB from the data folder
+//importing DB to make DB calls
 const db = require("../../data/db-config")
 
 const getAll = () => {
@@ -6,7 +6,7 @@ const getAll = () => {
 }
 
 const getById = id => {
-  // DO YOUR MAGIC
+  return db("accounts").where("id", id).first()
 }
 
 const create = account => {
