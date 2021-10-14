@@ -5,7 +5,7 @@ const Accounts = require("./accounts-model")
 const { checkAccountPayload, checkAccountNameUnique, checkAccountId } = require("./accounts-middleware")
 
 router.get('/', async(req, res, next) => {
-  try{
+  try{//data = account info in accounts table
     const data = await Accounts.getAll()
     res.json(data)
   } catch(err){
@@ -13,13 +13,8 @@ router.get('/', async(req, res, next) => {
   }
 })
 
-router.get('/:id', checkAccountId, async(req, res, next) => {
-  try{
-    const data = await Accounts.getById(req.params.id)
-    res.json(data)
-  }catch (err){
-    next(err)
-  }
+router.get('/:id', checkAccountId, async(req, res) => {
+  res.json(req.account)
 })
 
 router.post('/', checkAccountPayload, checkAccountNameUnique, (req, res, next) => {
